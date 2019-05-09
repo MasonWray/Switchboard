@@ -1,0 +1,11 @@
+{
+    "name": "switchboard",
+    "version": "0.0.1",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "dependencies": {
+        "electron": "^5.0.0"
+    }
+}
