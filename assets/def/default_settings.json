@@ -1,0 +1,10 @@
+{
+    "general": {},
+    "dashboard": {},
+    "content": {
+        "trackers": []
+    },
+    "import": {},
+    "backup": {},
+    "queue": {}
+}

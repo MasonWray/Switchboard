@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Head Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PunchBoard</title>
+
+    <!-- Prebuilt References -->
+    <link rel="stylesheet" href="lib/css/fonts.css">
+    <link rel="stylesheet" href="lib/css/all.css">
+    <script src="lib/js/jquery.js"></script>
+    <script src="lib/js/handlebars.js"></script>
+    <script src="lib/js/chart.js"></script>
+
+    <!-- Custom Assets -->
+    <link rel="stylesheet" href="app/app.css">
+    <script src="app/app.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <!-- Page Header -->
+        <nav id="header" class="row header">
+            <span class="center">
+                <div class="logo"><i class="fas fa-ticket-alt"></i> PunchBoard</div>
+            </span>
+            <button id="tab_dashboard" class="header-tab"><i class="fas fa-tachometer-alt"></i></button>
+            <button id="tab_library" class="header-tab"><i class="fas fa-photo-video"></i></button>
+            <button id="tab_import" class="header-tab"><i class="fas fa-download"></i></i></button>
+            <button id="tab_backup" class="header-tab"><i class="fas fa-upload"></i></i></button>
+            <button id="tab_queue" class="header-tab"><i class="fas fa-list-ul"></i></button>
+            <button id="tab_settings" class="header-tab"><i class="fas fa-cog"></i></button>
+        </nav>
+
+        <!-- Dashboard Page -->
+        <div id="page_dashboard" class="page card-container">
+            <div class="card column">
+                <canvas id="chartResources"></canvas>
+            </div>
+            <div class="card column">
+                <canvas id="chartNetwork"></canvas>
+            </div>
+            <div class="card column">
+                <canvas id="chartDisk"></canvas>
+            </div>
+        </div>
+
+        <!-- Content Page -->
+        <div id="page_library" class="page">
+            <div id="content_list" class="treeview column">
+                <div id="contentTreeLoader" class="loader"><img src="img/loader.svg" class="center"></img></div>
+                <div id="list_body"></div>
+            </div>
+            <div id="fileInfo" class="column">
+                <div id="fileInfoPrompt">Select an item from the list to the left to show details here</div>
+                <div id="fileInfoLoader" class="loader" style="display: none;"><img src="img/loader.svg"
+                        class="center"></img></div>
+                <div id="fileInfoData"></div>
+            </div>
+        </div>
+
+        <!-- Import Page -->
+        <div id="page_import" class="page row content"></div>
+
+        <!-- Backup Page -->
+        <div id="page_backup" class="page row content"></div>
+
+        <!-- Queue Page -->
+        <div id="page_queue" class="page row content"></div>
+
+        <!-- Settings Page -->
+        <div id="page_settings" class="page row content"></div>
+    </div>
+
+    <!-- List Template -->
+    <script id="template_list" type="x-handlebars-template">
+    {{#each items}}
+    {{#if isDirectory}}
+    <li> <i class="far fa-plus-square mr-1 collapsible"></i> <strong> {{name}} </strong>
+        {{#if items}}
+        <ul class="nested folder">
+            {{> list}}
+        </ul>
+        {{/if}}
+    </li>
+    {{else}}
+    <li class="file">
+        {{name}}
+        <i hidden class="filepath">{{path}}</i>
+    </li>
+    {{/if}}
+    {{/each}}
+    </script>
+
+    <!-- List Container Template -->
+    <script id="template_listbody" type="x-handlebars-template">
+    <ul class="folder">
+        {{> list}}
+    </ul>
+    </script>
+
+    <!-- File Details Template -->
+    <script id="template_fileDetails" type="x-handlebars-tempate">
+    <h1 class="fileInfoTitle">{{info.media.filename}}</h1>
+    <div class="fileInfoSubtitle">{{info.media.ref}}</div>
+    <fieldset>
+        <legend>General</legend>
+        {{#each info.media.general}}
+        Container: <span class="tag tag-{{Format}}">{{Format}}</span>
+        {{/each}}
+    </fieldset>
+    <fieldset>
+        <legend>Video</legend>
+        {{#each info.media.video}}
+        <div>
+            Track {{ID}} | 
+            <span class="tag tag-{{Format}}">{{Format}}</span>
+        </div>
+        {{/each}}
+    </fieldset>
+    <fieldset>
+        <legend>Audio</legend>
+        {{#each info.media.audio}}
+        <div>
+            {{Title}} | 
+            <span class="tag tag-{{Format}}">{{Format}}</span>
+        </div>
+        {{/each}}
+    </fieldset>
+    <fieldset>
+        <legend>Subtitles</legend>
+        {{#each info.media.text}}
+        <div>
+
+            {{Language}} |
+            <span class="tag tag-{{Format}}">{{Format}}</span>
+        </div>
+        {{/each}}
+    </fieldset>
+    </script>
+</body>
+
+</html>

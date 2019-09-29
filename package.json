@@ -1,0 +1,21 @@
+{
+  "name": "punchboard-server",
+  "version": "0.0.1",
+  "description": "Pretty print a JSON file.",
+  "main": "bin.js",
+  "bin": "bin.js",
+  "author": "anybody",
+  "license": "MIT",
+  "scripts": {
+    "build": "pkg . -t win",
+    "launch": "punchboard-server.exe",
+    "start": "npm run build && npm run launch"
+  },
+  "pkg": {
+    "assets": "assets/**/*"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "systeminformation": "^4.14.8"
+  }
+}
