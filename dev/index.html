@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Elements -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Import</title>
+
+    <!-- Style Imports -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        require('jquery');
+        require('popper.js');
+        require('bootstrap');
+        require('angular');
+    </script>
+
+    <!-- Custom Imports -->
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./lib/icons/css/all.css">
+    <script>
+        require('./index.js')
+    </script>
+
+</head>
+
+<body>
+    <!-- Custom Window Frame -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark py-0 m-0 mb-1">
+        <div class="navbar-brand">SwitchBoard</div>
+        <ul class="navbar-nav mr-auto"></ul>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-dark btn-window py-0 px-2"><i
+                    class="fas fa-window-minimize"></i></button>
+            <button type="button" class="btn btn-dark btn-window py-0 px-2"><i
+                    class="fas fa-window-restore"></i></button>
+            <button type="button" class="btn btn-dark btn-window py-0 px-2"><i class="fas fa-window-close"></i></button>
+        </div>
+    </nav>
+
+
+    <ul class="nav nav-tabs smaller mx-1">
+        <li class="nav-item">
+            <a class="nav-link active px-2 py-1" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-2 py-1" href="#"> Job Queue</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-2 py-1" href="#">Import </a>
+        </li>
+    </ul>
+
+    <div class="container-fluid">
+    </div>
+</body>
+
+</html>
