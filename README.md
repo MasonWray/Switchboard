@@ -1,2 +1,2 @@
 # Switchboard
-Media server ingest control simplified
+A simple server monitoring and backup system
