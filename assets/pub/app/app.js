@@ -13,7 +13,6 @@ function activateTab(id) {
 function setElementSizes() {
     $(".page").height($(window).height() - $("#header").height() - 1)
     $("#fileInfo").width($(window).width() - $("#content_list").outerWidth() - 0)
-    // console.log(`Treeview Width: ${$("#content_list").outerWidth()}`)
 }
 
 $(document).ready(() => {
@@ -70,11 +69,43 @@ $(document).ready(() => {
             chartResources.update();
 
             var netData = chartNetwork.data.datasets;
-            if(netData.length != data.netLoad.length){
+            if (netData.length != data.netLoad.length * 2) {
                 netData = new Array();
-
-                chartNetwork.data.datasets = netData;
+                for (var i of data.netLoad) {
+                    var up = new Object();
+                    var dn = new Object();
+                    up.label = dn.label = i.iface;
+                    up.label = up.label + " TX";
+                    dn.label = dn.label + " RX";
+                    up.borderWidth = dn.borderWidth = 1;
+                    up.borderColor = dn.borderColor = `hsl(${(357 * Math.random()).toFixed(0)}, 64%, 75%)`;
+                    up.lineTension = dn.lineTension = 0.01;
+                    up.fill = dn.fill = false;
+                    up.borderDash = [5, 5]
+                    up.data = [i.tx_sec];
+                    dn.data = [i.rx_sec];
+                    netData.push(up);
+                    netData.push(dn);
+                }
             }
+
+            for (var i of data.netLoad) {
+                for (var d in netData) {
+                    if (netData[d].label == i.iface + " TX"){
+                        netData[d].data.push(i.tx_sec);
+                    }
+                    if (netData[d].label == i.iface + " RX"){
+                        netData[d].data.push(i.rx_sec);
+                    }
+
+                    while(netData[d].data.length > chartNetwork.data.labels.length){
+                        netData[d].data.shift();
+                    }
+                }
+            }
+
+            chartNetwork.data.datasets = netData;
+            chartNetwork.update();
 
         })
     }, 1000);
@@ -112,17 +143,17 @@ var resourcesChartObject = {
             {
                 label: "Memory",
                 data: [],
-                borderWidth: 2,
+                borderWidth: 1,
                 borderColor: "#d595e8",
-                lineTension: 0.2,
+                lineTension: 0.01,
                 fill: false
             },
             {
                 label: "CPU",
                 data: [],
-                borderWidth: 2,
+                borderWidth: 1,
                 borderColor: "#95d1e8",
-                lineTension: 0.4,
+                lineTension: 0.01,
                 fill: false
             }
         ]
@@ -150,12 +181,14 @@ var resourcesChartObject = {
 
 var networkChartObject = {
     type: 'line',
-    labels: [, , , , , , , , , , , , , , , , , , , , , , , , , , , , ,],
-    datasets: [],
+    data: {
+        labels: [, , , , , , , , , , , , , , , , , , , , , , , , , , , , ,],
+        datasets: [],
+    },
     options: {
         title: {
             display: true,
-            text: 'Network Utilization (%)'
+            text: 'Network Utilization (B/sec)'
         },
         elements: {
             point: {
@@ -165,8 +198,7 @@ var networkChartObject = {
         scales: {
             yAxes: [{
                 ticks: {
-                    min: 0,
-                    max: 100
+                    min: 0
                 }
             }]
         }

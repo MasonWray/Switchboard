@@ -34,7 +34,7 @@ body {
     height: 100%;
     max-height: 100vh;
     font-family: 'Open Sans', sans-serif;
-    color: #212529;
+    color: rgb(33, 37, 41);
 }
 
 .column {
@@ -73,7 +73,7 @@ button:focus {
 }
 
 button.tab-active {
-    border-bottom-color: #95e8b6;
+    border-bottom-color: #96e8b7;
     /* border-bottom-color: #d595e8; */
 }
 

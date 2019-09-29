@@ -21,7 +21,7 @@ exports.getSystemStats = async function () {
                 }
             }
         }
-        console.log(data);
+        // console.log(data);
         return data;
     })
 
